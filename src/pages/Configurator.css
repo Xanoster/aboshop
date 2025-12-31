@@ -1,0 +1,189 @@
+.configurator-page {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.configurator-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--spacing-xl);
+  align-items: start;
+}
+
+.configurator-main .card {
+  position: relative;
+}
+
+/* Delivery Info Banner */
+.delivery-info-banner {
+  display: flex;
+  gap: var(--spacing-lg);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+  flex-wrap: wrap;
+}
+
+.delivery-info-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.delivery-info-icon {
+  font-size: 1.25rem;
+}
+
+.delivery-info-item > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.delivery-info-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.delivery-info-value {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Config Sections */
+.config-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.config-section h3 {
+  margin-bottom: var(--spacing-md);
+  font-size: 1rem;
+}
+
+.config-section .option-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.config-section .option-card {
+  padding: var(--spacing-md);
+}
+
+.config-section .option-card-icon {
+  font-size: 1.5rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.config-section .option-card-title {
+  font-size: 0.9rem;
+}
+
+.config-section .option-card-description {
+  font-size: 0.8rem;
+  margin-top: var(--spacing-xs);
+}
+
+/* Price Sidebar */
+.configurator-sidebar {
+  position: sticky;
+  top: 100px;
+}
+
+.price-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-lg);
+}
+
+.price-card h3 {
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.calculating {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  padding: var(--spacing-xl) 0;
+  color: var(--text-muted);
+}
+
+.price-details {
+  margin-bottom: var(--spacing-md);
+}
+
+.price-details .price-row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--spacing-sm) 0;
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--bg-tertiary);
+}
+
+.price-details .price-row:last-child {
+  border-bottom: none;
+}
+
+.price-total {
+  background: var(--bg-tertiary);
+  margin: 0 calc(-1 * var(--spacing-lg));
+  padding: var(--spacing-md) var(--spacing-lg);
+  margin-bottom: calc(-1 * var(--spacing-lg));
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+.price-total .price-row {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.price-value.total {
+  font-size: 1.25rem;
+  color: var(--primary-color);
+}
+
+.price-discount {
+  color: var(--success-color);
+}
+
+/* Textarea */
+textarea.form-input {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .configurator-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .configurator-sidebar {
+    position: static;
+  }
+  
+  .price-card {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+    z-index: 50;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  .price-card h3 {
+    display: none;
+  }
+  
+  .configurator-main {
+    padding-bottom: 220px;
+  }
+}

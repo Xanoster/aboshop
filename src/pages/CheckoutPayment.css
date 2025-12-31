@@ -1,0 +1,130 @@
+/* Payment Method Cards */
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.payment-method-card {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.payment-method-card:hover {
+  border-color: var(--primary-light);
+  background: var(--bg-tertiary);
+}
+
+.payment-method-card.selected {
+  border-color: var(--primary-color);
+  background: rgba(0, 102, 204, 0.05);
+}
+
+.payment-method-radio input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--primary-color);
+}
+
+.payment-method-icon {
+  font-size: 1.75rem;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+}
+
+.payment-method-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.payment-method-name {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.payment-method-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Payment Info Box */
+.payment-info-box {
+  display: flex;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.payment-info-box.compact {
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.payment-info-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.payment-info-content h4 {
+  margin: 0 0 var(--spacing-sm);
+  font-size: 1rem;
+}
+
+.payment-info-content p {
+  margin: 0 0 var(--spacing-sm);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.payment-info-content ul {
+  margin: 0;
+  padding-left: var(--spacing-lg);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.payment-info-content li {
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Direct Debit Form */
+.direct-debit-form {
+  margin-bottom: var(--spacing-xl);
+}
+
+/* SEPA Mandate */
+.sepa-mandate {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-md);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.sepa-mandate h4 {
+  margin: 0 0 var(--spacing-sm);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.sepa-mandate p {
+  margin: 0;
+  line-height: 1.5;
+}

@@ -1,0 +1,28 @@
+.delivery-address-page {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.info-box {
+  display: flex;
+  gap: var(--spacing-md);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
+}
+
+.info-box-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.info-box-content h4 {
+  margin-bottom: var(--spacing-xs);
+}
+
+.info-box-content p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}

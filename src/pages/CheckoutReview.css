@@ -1,0 +1,190 @@
+/* Review Page Styles */
+
+/* Review Sections */
+.review-section {
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.review-section:last-of-type {
+  border-bottom: none;
+}
+
+.review-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.review-section-header h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.btn-edit {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+
+.btn-edit:hover {
+  background: var(--bg-tertiary);
+}
+
+/* Review Grid */
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
+}
+
+.review-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.review-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.review-value {
+  font-weight: 600;
+}
+
+/* Review Address */
+.review-address,
+.review-payment,
+.review-contact {
+  padding: var(--spacing-md);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+}
+
+.review-address p,
+.review-payment p,
+.review-contact p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.delivery-method-badge,
+.payment-method-badge {
+  display: inline-block;
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: white;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.delivery-notes {
+  margin-top: var(--spacing-sm) !important;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.payment-details {
+  margin-top: var(--spacing-sm) !important;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Terms and Conditions */
+.review-terms {
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-lg);
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.checkbox-row:last-child {
+  margin-bottom: 0;
+}
+
+.checkbox-row input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: var(--primary-color);
+}
+
+.checkbox-row label {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.checkbox-row label a {
+  color: var(--primary-color);
+}
+
+.checkbox-row.optional {
+  opacity: 0.85;
+}
+
+.checkbox-row.error label {
+  color: var(--error-color);
+}
+
+.review-terms .error-text {
+  display: block;
+  margin-bottom: var(--spacing-md);
+  margin-left: 28px;
+}
+
+/* Summary Additions */
+.summary-discount {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--spacing-sm) 0;
+  font-size: 0.9rem;
+  color: var(--success-color);
+  border-top: 1px solid var(--border-color);
+}
+
+.discount-value {
+  font-weight: 600;
+}
+
+.summary-note {
+  margin-top: var(--spacing-md);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* Large Button */
+.btn-large {
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .review-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .review-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+}
