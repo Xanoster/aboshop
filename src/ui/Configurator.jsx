@@ -1,13 +1,14 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useSubscription } from '../context/SubscriptionContext';
 import { subscriptionService } from '../services/api';
 import ProgressSteps from '../components/ProgressSteps';
-import './Configurator.css';
 
 function Configurator() {
-  const navigate = useNavigate();
-  const { state, setConfiguration, setPricing, setCurrentStep, setLoading, setCustomer } = useSubscription();
+  const router = useRouter();
+  const { state, setConfiguration, setPricing, setCurrentStep, setLoading, setDeliveryInfo } = useSubscription();
   
   const subscriptionTypes = subscriptionService.getSubscriptionTypes();
   const paymentIntervals = subscriptionService.getPaymentIntervals();
@@ -29,9 +30,9 @@ function Configurator() {
     
     // Redirect if no delivery info
     if (!state.deliveryAddress.plz) {
-      navigate('/abokauf/zeitung/druckausgabe');
+      router.push('/abokauf/zeitung/druckausgabe');
     }
-  }, [setCurrentStep, state.deliveryAddress.plz, navigate]);
+  }, [router, setCurrentStep, state.deliveryAddress.plz]);
 
   // Calculate price whenever config changes
   useEffect(() => {
@@ -43,8 +44,12 @@ function Configurator() {
           subscriptionType: config.subscriptionType,
           paymentInterval: config.paymentInterval,
           edition: config.edition,
+          plz: state.deliveryAddress.plz,
         });
         setLocalPricing(result);
+        if (result?.deliveryMethod) {
+          setDeliveryInfo({ method: result.deliveryMethod });
+        }
       } catch (err) {
         console.error('Error calculating price:', err);
       }
@@ -52,7 +57,7 @@ function Configurator() {
     };
     
     calculatePrice();
-  }, [config, state.deliveryInfo.distance]);
+  }, [config, state.deliveryInfo.distance, state.deliveryAddress.plz, setDeliveryInfo]);
 
   function formatDate(date) {
     const d = new Date(date);
@@ -83,7 +88,7 @@ function Configurator() {
     }
 
     setLoading(false);
-    navigate('/abokauf/zeitung/druckausgabe/checkout/login');
+    router.push('/abokauf/zeitung/druckausgabe/checkout/login');
   };
 
   const getEditionName = (editionId) => {
@@ -244,7 +249,7 @@ function Configurator() {
                 <button
                   type="button"
                   className="btn btn-secondary"
-                  onClick={() => navigate('/abokauf/zeitung/druckausgabe')}
+                  onClick={() => router.push('/abokauf/zeitung/druckausgabe')}
                 >
                   ← Back
                 </button>

@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+"use client";
+
+import React, { useEffect, useMemo } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useSubscription } from '../context/SubscriptionContext';
-import './ThankYou.css';
 
 function ThankYou() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { state, reset, setCurrentStep } = useSubscription();
 
   useEffect(() => {
@@ -12,13 +14,13 @@ function ThankYou() {
     
     // Redirect if order is not complete
     if (!state.orderComplete) {
-      navigate('/');
+      router.push('/');
     }
-  }, [setCurrentStep, state.orderComplete, navigate]);
+  }, [router, setCurrentStep, state.orderComplete]);
 
   const handleStartOver = () => {
     reset();
-    navigate('/');
+    router.push('/');
   };
 
   const getEditionName = () => {
@@ -27,8 +29,13 @@ function ThankYou() {
     )?.name || 'Standard';
   };
 
-  // Generate a random order number
-  const orderNumber = `ABO-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+  // Use the stored order id to keep SSR/CSR consistent
+  const orderNumber = useMemo(() => {
+    if (state.orderId) return state.orderId;
+    // Fallback is deterministic to avoid hydration mismatch
+    const emailSeed = state.customer?.email || 'pending';
+    return `ABO-${emailSeed.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 8) || 'PENDING'}-DEMO`;
+  }, [state.orderId, state.customer?.email]);
 
   return (
     <div className="thankyou-page">

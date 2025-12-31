@@ -1,11 +1,12 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useSubscription } from '../context/SubscriptionContext';
 import ProgressSteps from '../components/ProgressSteps';
-import './Checkout.css';
 
 function CheckoutBilling() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { state, setBillingAddress, copyDeliveryToBilling, setCurrentStep } = useSubscription();
   
   const [sameAsDelivery, setSameAsDelivery] = useState(true);
@@ -27,9 +28,9 @@ function CheckoutBilling() {
     
     // Redirect if no customer logged in
     if (!state.customer) {
-      navigate('/abokauf/zeitung/druckausgabe/checkout/login');
+      router.push('/abokauf/zeitung/druckausgabe/checkout/login');
     }
-  }, [setCurrentStep, state.customer, navigate]);
+  }, [router, setCurrentStep, state.customer]);
 
   useEffect(() => {
     if (sameAsDelivery) {
@@ -95,7 +96,7 @@ function CheckoutBilling() {
       setBillingAddress(formData);
     }
     
-    navigate('/abokauf/zeitung/druckausgabe/checkout/payment');
+    router.push('/abokauf/zeitung/druckausgabe/checkout/payment');
   };
 
   return (
@@ -302,7 +303,7 @@ function CheckoutBilling() {
                 <button
                   type="button"
                   className="btn btn-secondary"
-                  onClick={() => navigate('/abokauf/zeitung/druckausgabe/konfigurator')}
+                  onClick={() => router.push('/abokauf/zeitung/druckausgabe/konfigurator')}
                 >
                   ← Back
                 </button>

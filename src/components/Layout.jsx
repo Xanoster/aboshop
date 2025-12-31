@@ -1,5 +1,5 @@
 import React from 'react';
-import './Layout.css';
+import Link from 'next/link';
 
 function Layout({ children }) {
   return (
@@ -7,10 +7,10 @@ function Layout({ children }) {
       <header className="header">
         <div className="container">
           <div className="header-content">
-            <a href="/" className="logo">
+            <Link href="/" className="logo">
               <span className="logo-icon">📰</span>
               <span className="logo-text">AboShop</span>
-            </a>
+            </Link>
             <nav className="header-nav">
               <span className="header-tagline">Your Digital Newspaper Subscription</span>
             </nav>

@@ -94,33 +94,6 @@ export const subscriptionService = {
   },
 
   /**
-   * Create a new subscription
-   * @param {Object} subscriptionData
-   * @returns {Promise<{success: boolean, abo?: Object}>}
-   */
-  async create(subscriptionData) {
-    return db.saveAbo(subscriptionData);
-  },
-
-  /**
-   * Get subscription by ID
-   * @param {number} aboId
-   * @returns {Promise<Object|null>}
-   */
-  async getById(aboId) {
-    return db.readAbo(aboId);
-  },
-
-  /**
-   * Get all subscriptions for a customer
-   * @param {number} customerId
-   * @returns {Promise<Array>}
-   */
-  async getByCustomerId(customerId) {
-    return db.getAllAbosForCustomer(customerId);
-  },
-
-  /**
    * Get available subscription types
    * @returns {Array}
    */
@@ -186,22 +159,8 @@ export const subscriptionService = {
   },
 };
 
-/**
- * Company Services
- */
-export const companyService = {
-  /**
-   * Get company information
-   * @returns {Promise<Object>}
-   */
-  async getInfo() {
-    return db.getCompanyInfo();
-  },
-};
-
 export default {
   addressService,
   customerService,
   subscriptionService,
-  companyService,
 };

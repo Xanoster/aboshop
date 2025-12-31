@@ -1,13 +1,13 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useSubscription } from '../context/SubscriptionContext';
 import { subscriptionService } from '../services/api';
 import ProgressSteps from '../components/ProgressSteps';
-import './Checkout.css';
-import './CheckoutPayment.css';
 
 function CheckoutPayment() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { state, setPayment, setCurrentStep } = useSubscription();
   
   const paymentMethods = subscriptionService.getPaymentMethods();
@@ -27,9 +27,9 @@ function CheckoutPayment() {
     
     // Redirect if no billing address
     if (!state.billingAddress.plz) {
-      navigate('/abokauf/zeitung/druckausgabe/checkout/billing');
+      router.push('/abokauf/zeitung/druckausgabe/checkout/billing');
     }
-  }, [setCurrentStep, state.billingAddress.plz, navigate]);
+  }, [router, setCurrentStep, state.billingAddress.plz]);
 
   const validateIBAN = (iban) => {
     // Basic IBAN validation (simplified)
@@ -80,7 +80,7 @@ function CheckoutPayment() {
     };
     
     setPayment(paymentData);
-    navigate('/abokauf/zeitung/druckausgabe/checkout/review');
+    router.push('/abokauf/zeitung/druckausgabe/checkout/review');
   };
 
   const getMethodInfo = (methodId) => {
@@ -89,7 +89,7 @@ function CheckoutPayment() {
 
   return (
     <div className="checkout-page">
-      <ProgressSteps currentStep={4} />
+      <ProgressSteps currentStep={5} />
       
       <div className="checkout-layout">
         <div className="checkout-main">
@@ -243,7 +243,7 @@ function CheckoutPayment() {
                 <button
                   type="button"
                   className="btn btn-secondary"
-                  onClick={() => navigate('/abokauf/zeitung/druckausgabe/checkout/billing')}
+                  onClick={() => router.push('/abokauf/zeitung/druckausgabe/checkout/billing')}
                 >
                   ← Back
                 </button>

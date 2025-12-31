@@ -1,12 +1,13 @@
+"use client";
+
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import './LandingPage.css';
+import { useRouter } from 'next/navigation';
 
 function LandingPage() {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleOrderClick = () => {
-    navigate('/abokauf/zeitung/druckausgabe');
+    router.push('/abokauf/zeitung/druckausgabe');
   };
 
   return (

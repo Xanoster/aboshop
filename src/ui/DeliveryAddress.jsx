@@ -1,12 +1,13 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useSubscription } from '../context/SubscriptionContext';
 import { addressService } from '../services/api';
 import ProgressSteps from '../components/ProgressSteps';
-import './DeliveryAddress.css';
 
 function DeliveryAddress() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { state, setDeliveryAddress, setDeliveryInfo, setCurrentStep, setLoading, setError } = useSubscription();
   
   const [formData, setFormData] = useState({
@@ -110,7 +111,7 @@ function DeliveryAddress() {
       });
       
       // Navigate to configurator
-      navigate('/abokauf/zeitung/druckausgabe/konfigurator');
+      router.push('/abokauf/zeitung/druckausgabe/konfigurator');
     } catch (err) {
       setError('An error occurred. Please try again.');
       console.error('Error:', err);
@@ -244,7 +245,7 @@ function DeliveryAddress() {
             <button
               type="button"
               className="btn btn-secondary"
-              onClick={() => navigate('/')}
+              onClick={() => router.push('/')}
             >
               ← Back
             </button>

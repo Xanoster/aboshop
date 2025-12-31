@@ -1,5 +1,4 @@
 import React from 'react';
-import './ProgressSteps.css';
 
 const steps = [
   { number: 1, label: 'Delivery' },

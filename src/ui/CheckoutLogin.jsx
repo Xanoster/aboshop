@@ -1,12 +1,13 @@
+"use client";
+
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useSubscription } from '../context/SubscriptionContext';
 import { customerService } from '../services/api';
 import ProgressSteps from '../components/ProgressSteps';
-import './Checkout.css';
 
 function CheckoutLogin() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { state, setCustomer, setCurrentStep, setError, setLoading } = useSubscription();
 
   const [mode, setMode] = useState('login');
@@ -25,14 +26,14 @@ function CheckoutLogin() {
     setCurrentStep(3);
 
     if (!state.deliveryAddress.plz) {
-      navigate('/abokauf/zeitung/druckausgabe');
+      router.push('/abokauf/zeitung/druckausgabe');
       return;
     }
 
     if (state.customer) {
-      navigate('/abokauf/zeitung/druckausgabe/checkout/billing');
+      router.push('/abokauf/zeitung/druckausgabe/checkout/billing');
     }
-  }, [setCurrentStep, state.deliveryAddress.plz, state.customer, navigate]);
+  }, [router, setCurrentStep, state.customer, state.deliveryAddress.plz]);
 
   const handleLoginChange = (field, value) => {
     setLoginForm(prev => ({ ...prev, [field]: value }));
@@ -68,7 +69,7 @@ function CheckoutLogin() {
 
   const finishLogin = (customer) => {
     setCustomer(customer);
-    navigate('/abokauf/zeitung/druckausgabe/checkout/billing');
+    router.push('/abokauf/zeitung/druckausgabe/checkout/billing');
   };
 
   const handleLoginSubmit = async (e) => {
@@ -233,7 +234,7 @@ function CheckoutLogin() {
                   <button
                     type="button"
                     className="btn btn-secondary"
-                    onClick={() => navigate('/abokauf/zeitung/druckausgabe/konfigurator')}
+                    onClick={() => router.push('/abokauf/zeitung/druckausgabe/konfigurator')}
                   >
                     ← Back
                   </button>
@@ -316,7 +317,7 @@ function CheckoutLogin() {
                   <button
                     type="button"
                     className="btn btn-secondary"
-                    onClick={() => navigate('/abokauf/zeitung/druckausgabe/konfigurator')}
+                    onClick={() => router.push('/abokauf/zeitung/druckausgabe/konfigurator')}
                   >
                     ← Back
                   </button>

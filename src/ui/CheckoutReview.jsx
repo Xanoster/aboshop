@@ -1,13 +1,19 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useSubscription } from '../context/SubscriptionContext';
 import { subscriptionService } from '../services/api';
 import ProgressSteps from '../components/ProgressSteps';
-import './Checkout.css';
-import './CheckoutReview.css';
+
+const generateOrderId = () =>
+  `ABO-${Date.now().toString(36).toUpperCase()}-${Math.random()
+    .toString(36)
+    .substring(2, 6)
+    .toUpperCase()}`;
 
 function CheckoutReview() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { 
     state, 
     setTermsAccepted, 
@@ -28,9 +34,9 @@ function CheckoutReview() {
     
     // Redirect if no payment method
     if (!state.payment.method) {
-      navigate('/abokauf/zeitung/druckausgabe/checkout/payment');
+      router.push('/abokauf/zeitung/druckausgabe/checkout/payment');
     }
-  }, [setCurrentStep, state.payment.method, navigate]);
+  }, [router, setCurrentStep, state.payment.method]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -72,9 +78,10 @@ function CheckoutReview() {
       const result = await subscriptionService.createSubscription(subscriptionData);
       
       if (result.success) {
+        const orderId = result.orderId || generateOrderId();
         setTermsAccepted(true);
-        setOrderComplete(true);
-        navigate('/abokauf/zeitung/druckausgabe/thankyou');
+        setOrderComplete(orderId);
+        router.push('/abokauf/zeitung/druckausgabe/thankyou');
       } else {
         setErrors({ submit: result.message || 'Failed to create subscription' });
       }
@@ -104,7 +111,7 @@ function CheckoutReview() {
 
   return (
     <div className="checkout-page">
-      <ProgressSteps currentStep={4} />
+      <ProgressSteps currentStep={6} />
       
       <div className="checkout-layout">
         <div className="checkout-main">
@@ -147,7 +154,7 @@ function CheckoutReview() {
                   <button
                     type="button"
                     className="btn-edit"
-                    onClick={() => navigate('/abokauf/zeitung/druckausgabe/konfigurator')}
+                    onClick={() => router.push('/abokauf/zeitung/druckausgabe/konfigurator')}
                   >
                     Edit
                   </button>
@@ -179,7 +186,7 @@ function CheckoutReview() {
                   <button
                     type="button"
                     className="btn-edit"
-                    onClick={() => navigate('/abokauf/zeitung/druckausgabe')}
+                    onClick={() => router.push('/abokauf/zeitung/druckausgabe')}
                   >
                     Edit
                   </button>
@@ -204,7 +211,7 @@ function CheckoutReview() {
                   <button
                     type="button"
                     className="btn-edit"
-                    onClick={() => navigate('/abokauf/zeitung/druckausgabe/checkout/billing')}
+                    onClick={() => router.push('/abokauf/zeitung/druckausgabe/checkout/billing')}
                   >
                     Edit
                   </button>
@@ -224,7 +231,7 @@ function CheckoutReview() {
                   <button
                     type="button"
                     className="btn-edit"
-                    onClick={() => navigate('/abokauf/zeitung/druckausgabe/checkout/payment')}
+                    onClick={() => router.push('/abokauf/zeitung/druckausgabe/checkout/payment')}
                   >
                     Edit
                   </button>
@@ -308,7 +315,7 @@ function CheckoutReview() {
                 <button
                   type="button"
                   className="btn btn-secondary"
-                  onClick={() => navigate('/abokauf/zeitung/druckausgabe/checkout/payment')}
+                  onClick={() => router.push('/abokauf/zeitung/druckausgabe/checkout/payment')}
                   disabled={isSubmitting}
                 >
                   ← Back

@@ -39,6 +39,30 @@ const pressCompanyInfos = {
 };
 
 //*********************************/
+// Database - Edition coverage per city (simplified mapping)
+//*********************************/
+const cityEditionMap = {
+  Stuttgart: 1,
+  Reutlingen: 1,
+  Tübingen: 3,
+  Esslingen: 1,
+  Ulm: 2,
+  München: 2,
+  Berlin: 2,
+  Hamburg: 2,
+  Köln: 1,
+  Frankfurt: 2,
+  Dresden: 1,
+  Leipzig: 1,
+  Bremen: 2,
+  Essen: 1,
+  Dortmund: 1,
+  Nürnberg: 1,
+  Karlsruhe: 1,
+  Lübeck: 1,
+};
+
+//*********************************/
 // Database - PLZ to Coordinates (sample)
 //*********************************/
 const plzToCoordinates = {
@@ -198,14 +222,44 @@ export function updateCustomer(customer) {
 
 export function loginCustomer(email, password) {
   return new Promise((resolve) => {
-    const customer = Object.values(customers).find(
-      (c) => c.email === email && c.password === password
-    );
-    if (customer) {
-      setTimeout(() => resolve({ success: true, customer }), 500);
-    } else {
-      setTimeout(() => resolve({ success: false, message: 'Invalid email or password' }), 500);
+    // Accept any credentials; create a customer record if one does not exist
+    const existingCustomer = Object.values(customers).find((c) => c.email === email);
+
+    if (existingCustomer) {
+      setTimeout(() => resolve({ success: true, customer: existingCustomer }), 200);
+      return;
     }
+
+    const newId = Object.keys(customers).length + 1;
+    const newCustomer = {
+      id: newId,
+      firstname: 'Demo',
+      lastname: 'User',
+      firstName: 'Demo',
+      lastName: 'User',
+      companyname: '',
+      email,
+      password,
+      salutation: 'Herr',
+      phone: '',
+      deliveryAddress: {
+        street: '',
+        houseNumber: '',
+        street2: '',
+        city: '',
+        plz: '',
+      },
+      billingAddress: {
+        street: '',
+        houseNumber: '',
+        street2: '',
+        city: '',
+        plz: '',
+      },
+    };
+
+    customers = { ...customers, [newId]: newCustomer };
+    setTimeout(() => resolve({ success: true, customer: newCustomer }), 200);
   });
 }
 
@@ -216,20 +270,6 @@ export function saveAbo(newAbo) {
     const abo = { ...newAbo, id: newId };
     abos = { ...abos, [newId]: abo };
     setTimeout(() => resolve({ success: true, abo }), 300);
-  });
-}
-
-export function readAbo(aboId) {
-  return new Promise((resolve) => {
-    const abo = Object.values(abos).find((a) => a.id === aboId);
-    setTimeout(() => resolve(abo || null), 300);
-  });
-}
-
-export function getAllAbosForCustomer(customerId) {
-  return new Promise((resolve) => {
-    const customerAbos = Object.values(abos).filter((a) => a.cid === customerId);
-    setTimeout(() => resolve(customerAbos), 300);
   });
 }
 
@@ -251,7 +291,14 @@ export function getLocalVersionsForPlz(plz) {
 // 5. Price Calculation
 export function calculatePrice(config) {
   return new Promise((resolve) => {
-    const { distance, subscriptionType, paymentInterval, edition } = config;
+    const { distance, subscriptionType, paymentInterval, edition, plz } = config;
+
+    const getLocalEditionForPlz = () => {
+      const city = plzToCoordinates[plz]?.city;
+      return cityEditionMap[city] || 1;
+    };
+
+    const localEdition = getLocalEditionForPlz();
 
     // Base prices
     let baseMonthlyPrice = 29.99; // Base monthly price
@@ -268,11 +315,13 @@ export function calculatePrice(config) {
       baseMonthlyPrice += 2.0; // County edition slightly more
     }
 
-    // Distance adjustment (delivery cost)
+    // Distance and edition coverage adjustment (delivery cost)
     let deliveryFee = 0;
     let deliveryMethod = 'Local Agent';
 
-    if (distance > 50) {
+    const requiresPost = distance > 50 || (edition && edition !== localEdition);
+
+    if (requiresPost) {
       deliveryMethod = 'Post';
       if (distance <= 100) {
         deliveryFee = 3.0;
@@ -299,18 +348,14 @@ export function calculatePrice(config) {
       deliveryMethod,
       deliveryFee: parseFloat(deliveryFee.toFixed(2)),
       discount: paymentInterval === 'Annual' ? '10%' : '0%',
+      deliveryMethod,
     };
 
     setTimeout(() => resolve(result), 300);
   });
 }
 
-// 6. Get Company Info
-export function getCompanyInfo() {
-  return Promise.resolve(pressCompanyInfos);
-}
-
-// 7. Get PLZ Info
+// 6. Get PLZ Info
 export function getPLZInfo(plz) {
   return new Promise((resolve) => {
     const info = plzToCoordinates[plz];
@@ -343,11 +388,8 @@ export default {
   updateCustomer,
   loginCustomer,
   saveAbo,
-  readAbo,
-  getAllAbosForCustomer,
   getLocalVersionsForPlz,
   calculatePrice,
-  getCompanyInfo,
   getPLZInfo,
   sendConfirmationEmail,
 };
