@@ -24,7 +24,7 @@ function CheckoutReview() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    setCurrentStep(5);
+    setCurrentStep(6);
     
     // Redirect if no payment method
     if (!state.payment.method) {
@@ -60,6 +60,7 @@ function CheckoutReview() {
       // Create subscription
       const subscriptionData = {
         customerId: state.customer.id,
+        customerEmail: state.customer.email,
         deliveryAddress: state.deliveryAddress,
         billingAddress: state.billingAddress,
         configuration: state.configuration,
@@ -96,7 +97,9 @@ function CheckoutReview() {
   };
 
   const formatAddress = (address) => {
-    return `${address.street} ${address.houseNumber}, ${address.plz} ${address.city}`;
+    const streetLine = [address.street, address.houseNumber].filter(Boolean).join(' ');
+    const extraLine = address.street2 ? `${address.street2}, ` : '';
+    return `${streetLine}, ${extraLine}${address.plz} ${address.city}`;
   };
 
   return (

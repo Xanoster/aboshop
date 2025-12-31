@@ -8,7 +8,7 @@ function ThankYou() {
   const { state, reset, setCurrentStep } = useSubscription();
 
   useEffect(() => {
-    setCurrentStep(6);
+    setCurrentStep(7);
     
     // Redirect if order is not complete
     if (!state.orderComplete) {
@@ -83,7 +83,8 @@ function ThankYou() {
                 <div className="detail-content">
                   <span className="detail-label">Delivery Address</span>
                   <span className="detail-value">
-                    {state.deliveryAddress.street} {state.deliveryAddress.houseNumber},
+                    {state.deliveryAddress.street} {state.deliveryAddress.houseNumber}
+                    {state.deliveryAddress.street2 ? `, ${state.deliveryAddress.street2}` : ''},
                     {' '}{state.deliveryAddress.plz} {state.deliveryAddress.city}
                   </span>
                 </div>

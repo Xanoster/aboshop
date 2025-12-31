@@ -4,6 +4,7 @@ import Layout from './components/Layout';
 import LandingPage from './pages/LandingPage';
 import DeliveryAddress from './pages/DeliveryAddress';
 import Configurator from './pages/Configurator';
+import CheckoutLogin from './pages/CheckoutLogin';
 import CheckoutBilling from './pages/CheckoutBilling';
 import CheckoutPayment from './pages/CheckoutPayment';
 import CheckoutReview from './pages/CheckoutReview';
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/abokauf/zeitung/druckausgabe" element={<DeliveryAddress />} />
         <Route path="/abokauf/zeitung/druckausgabe/konfigurator" element={<Configurator />} />
+        <Route path="/abokauf/zeitung/druckausgabe/checkout/login" element={<CheckoutLogin />} />
         <Route path="/abokauf/zeitung/druckausgabe/checkout/billing" element={<CheckoutBilling />} />
         <Route path="/abokauf/zeitung/druckausgabe/checkout/payment" element={<CheckoutPayment />} />
         <Route path="/abokauf/zeitung/druckausgabe/checkout/review" element={<CheckoutReview />} />

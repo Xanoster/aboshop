@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSubscription } from '../context/SubscriptionContext';
-import { subscriptionService, customerService } from '../services/api';
+import { subscriptionService } from '../services/api';
 import ProgressSteps from '../components/ProgressSteps';
 import './Configurator.css';
 
@@ -82,18 +82,8 @@ function Configurator() {
       });
     }
 
-    // Auto-login with demo customer to skip authentication step
-    try {
-      const demoLogin = await customerService.login('test@example.com', 'password123');
-      if (demoLogin?.success && demoLogin.customer) {
-        setCustomer(demoLogin.customer);
-      }
-    } catch (err) {
-      console.error('Demo login failed', err);
-    }
-
     setLoading(false);
-    navigate('/abokauf/zeitung/druckausgabe/checkout/billing');
+    navigate('/abokauf/zeitung/druckausgabe/checkout/login');
   };
 
   const getEditionName = (editionId) => {

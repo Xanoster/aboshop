@@ -7,7 +7,8 @@ const initialState = {
   
   // Step 1: Delivery Address
   deliveryAddress: {
-    street1: '',
+    street: '',
+    houseNumber: '',
     street2: '',
     plz: '',
     city: '',
@@ -44,7 +45,8 @@ const initialState = {
   
   // Step 4: Checkout - Billing Address
   billingAddress: {
-    street1: '',
+    street: '',
+    houseNumber: '',
     street2: '',
     plz: '',
     city: '',

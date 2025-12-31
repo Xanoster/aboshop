@@ -53,6 +53,15 @@ const plzToCoordinates = {
   '20095': { zipcode: '20095', city: 'Hamburg', latitude: 53.5511, longitude: 9.9937 },
   '50667': { zipcode: '50667', city: 'Köln', latitude: 50.9375, longitude: 6.9603 },
   '60311': { zipcode: '60311', city: 'Frankfurt', latitude: 50.1109, longitude: 8.6821 },
+  '01067': { zipcode: '01067', city: 'Dresden', latitude: 51.0504, longitude: 13.7373 },
+  '04109': { zipcode: '04109', city: 'Leipzig', latitude: 51.3397, longitude: 12.3731 },
+  '28195': { zipcode: '28195', city: 'Bremen', latitude: 53.0793, longitude: 8.8017 },
+  '45127': { zipcode: '45127', city: 'Essen', latitude: 51.4582, longitude: 7.0158 },
+  '44135': { zipcode: '44135', city: 'Dortmund', latitude: 51.5136, longitude: 7.4653 },
+  '90402': { zipcode: '90402', city: 'Nürnberg', latitude: 49.4521, longitude: 11.0767 },
+  '04275': { zipcode: '04275', city: 'Leipzig', latitude: 51.3195, longitude: 12.3731 },
+  '76133': { zipcode: '76133', city: 'Karlsruhe', latitude: 49.0069, longitude: 8.4037 },
+  '23552': { zipcode: '23552', city: 'Lübeck', latitude: 53.8655, longitude: 10.6866 },
 };
 
 //*********************************/
@@ -93,13 +102,15 @@ let customers = {
     lastName: 'User',
     phone: '',
     deliveryAddress: {
-      street1: 'Musterstraße 10',
+      street: 'Musterstraße',
+      houseNumber: '10',
       street2: '',
       city: 'Reutlingen',
       plz: '72762',
     },
     billingAddress: {
-      street1: 'Musterstraße 10',
+      street: 'Musterstraße',
+      houseNumber: '10',
       street2: '',
       city: 'Reutlingen',
       plz: '72762',
@@ -307,6 +318,24 @@ export function getPLZInfo(plz) {
   });
 }
 
+// 8. Confirmation Email (simulated)
+export function sendConfirmationEmail(abo, customerEmail) {
+  return new Promise((resolve) => {
+    const emailPayload = {
+      to: customerEmail,
+      subject: 'Ihre Zeitungsbestellung - Bestätigung',
+      body: `Danke für Ihre Bestellung. Abo-ID: ${abo?.id || 'pending'}.`,
+    };
+
+    // Simulate email transport delay
+    setTimeout(() => {
+      // eslint-disable-next-line no-console
+      console.log('Mock email sent', emailPayload);
+      resolve({ sent: true, payload: emailPayload });
+    }, 300);
+  });
+}
+
 export default {
   checkDatabaseDistance,
   saveCustomer,
@@ -320,4 +349,5 @@ export default {
   calculatePrice,
   getCompanyInfo,
   getPLZInfo,
+  sendConfirmationEmail,
 };

@@ -4,10 +4,11 @@ import './ProgressSteps.css';
 const steps = [
   { number: 1, label: 'Delivery' },
   { number: 2, label: 'Configure' },
-  { number: 3, label: 'Billing' },
-  { number: 4, label: 'Payment' },
-  { number: 5, label: 'Review' },
-  { number: 6, label: 'Thank You' },
+  { number: 3, label: 'Login' },
+  { number: 4, label: 'Billing' },
+  { number: 5, label: 'Payment' },
+  { number: 6, label: 'Review' },
+  { number: 7, label: 'Thank You' },
 ];
 
 function ProgressSteps({ currentStep }) {

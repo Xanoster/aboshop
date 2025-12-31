@@ -10,7 +10,8 @@ function DeliveryAddress() {
   const { state, setDeliveryAddress, setDeliveryInfo, setCurrentStep, setLoading, setError } = useSubscription();
   
   const [formData, setFormData] = useState({
-    street1: state.deliveryAddress.street1 || '',
+    street: state.deliveryAddress.street || '',
+    houseNumber: state.deliveryAddress.houseNumber || '',
     street2: state.deliveryAddress.street2 || '',
     plz: state.deliveryAddress.plz || '',
     city: state.deliveryAddress.city || '',
@@ -56,8 +57,12 @@ function DeliveryAddress() {
   const validateForm = () => {
     const newErrors = {};
     
-    if (!formData.street1.trim()) {
-      newErrors.street1 = 'Street address is required';
+    if (!formData.street.trim()) {
+      newErrors.street = 'Street is required';
+    }
+
+    if (!formData.houseNumber.trim()) {
+      newErrors.houseNumber = 'House number is required';
     }
     
     if (!formData.plz.trim()) {
@@ -127,22 +132,40 @@ function DeliveryAddress() {
         </div>
         
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="street1" className="form-label">
-              Street Address *
-            </label>
-            <input
-              type="text"
-              id="street1"
-              name="street1"
-              value={formData.street1}
-              onChange={handleChange}
-              className={`form-input ${errors.street1 ? 'error' : ''}`}
-              placeholder="e.g., Musterstraße 123"
-            />
-            {errors.street1 && <p className="form-error">{errors.street1}</p>}
+          <div className="form-row">
+            <div className="form-group" style={{ flex: 3 }}>
+              <label htmlFor="street" className="form-label">
+                Street *
+              </label>
+              <input
+                type="text"
+                id="street"
+                name="street"
+                value={formData.street}
+                onChange={handleChange}
+                className={`form-input ${errors.street ? 'error' : ''}`}
+                placeholder="e.g., Musterstraße"
+              />
+              {errors.street && <p className="form-error">{errors.street}</p>}
+            </div>
+
+            <div className="form-group" style={{ flex: 1 }}>
+              <label htmlFor="houseNumber" className="form-label">
+                House No. *
+              </label>
+              <input
+                type="text"
+                id="houseNumber"
+                name="houseNumber"
+                value={formData.houseNumber}
+                onChange={handleChange}
+                className={`form-input ${errors.houseNumber ? 'error' : ''}`}
+                placeholder="e.g., 123A"
+              />
+              {errors.houseNumber && <p className="form-error">{errors.houseNumber}</p>}
+            </div>
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="street2" className="form-label">
               Address Line 2 (Optional)

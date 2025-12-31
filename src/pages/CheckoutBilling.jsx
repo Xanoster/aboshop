@@ -16,17 +16,18 @@ function CheckoutBilling() {
     company: state.billingAddress.company || '',
     street: state.billingAddress.street || '',
     houseNumber: state.billingAddress.houseNumber || '',
+    street2: state.billingAddress.street2 || '',
     plz: state.billingAddress.plz || '',
     city: state.billingAddress.city || '',
   });
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    setCurrentStep(3);
+    setCurrentStep(4);
     
     // Redirect if no customer logged in
     if (!state.customer) {
-      navigate('/abokauf/zeitung/druckausgabe/konfigurator');
+      navigate('/abokauf/zeitung/druckausgabe/checkout/login');
     }
   }, [setCurrentStep, state.customer, navigate]);
 
@@ -39,6 +40,7 @@ function CheckoutBilling() {
         company: '',
         street: state.deliveryAddress.street,
         houseNumber: state.deliveryAddress.houseNumber,
+        street2: state.deliveryAddress.street2,
         plz: state.deliveryAddress.plz,
         city: state.deliveryAddress.city,
       });
@@ -149,6 +151,7 @@ function CheckoutBilling() {
                     </p>
                     <p className="preview-address">
                       {state.deliveryAddress.street} {state.deliveryAddress.houseNumber}
+                      {state.deliveryAddress.street2 ? `, ${state.deliveryAddress.street2}` : ''}
                     </p>
                     <p className="preview-city">
                       {state.deliveryAddress.plz} {state.deliveryAddress.city}
@@ -246,6 +249,20 @@ function CheckoutBilling() {
                       />
                       {errors.houseNumber && <span className="error-text">{errors.houseNumber}</span>}
                     </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="street2" className="form-label">
+                      Address Line 2 (Optional)
+                    </label>
+                    <input
+                      type="text"
+                      id="street2"
+                      value={formData.street2}
+                      onChange={(e) => handleChange('street2', e.target.value)}
+                      className="form-input"
+                      placeholder="Apartment, suite, etc."
+                    />
                   </div>
                   
                   <div className="form-row">

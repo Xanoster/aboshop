@@ -169,7 +169,20 @@ export const subscriptionService = {
    * @returns {Promise<{success: boolean, abo?: Object}>}
    */
   async createSubscription(subscriptionData) {
-    return db.saveAbo(subscriptionData);
+    const result = await db.saveAbo(subscriptionData);
+    if (result?.success) {
+      try {
+        const emailResult = await db.sendConfirmationEmail(
+          result.abo,
+          subscriptionData.customerEmail
+        );
+        return { ...result, emailSent: !!emailResult?.sent };
+      } catch (err) {
+        return { ...result, emailSent: false };
+      }
+    }
+
+    return result;
   },
 };
 

@@ -23,7 +23,7 @@ function CheckoutPayment() {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    setCurrentStep(4);
+    setCurrentStep(5);
     
     // Redirect if no billing address
     if (!state.billingAddress.plz) {
